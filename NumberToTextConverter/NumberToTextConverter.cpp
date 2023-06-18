@@ -8,15 +8,15 @@ using namespace std;
 void numToTextConvert(char numbers[], bool trigger)
 {
     // Разбивающий массив
-    char trichar[3] = { 0,0,0 };
+    char trichar[3] { 0,0,0 };
     // Счётчики
-    int count = 0, cycles = 0;
+    int count{ 0 }, cycles{ 0 };
 
     // Словари
-    string stringnums[] = { " ", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять" },
-        stringnumsteens[] = { " ", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" },
-        stringnumsdec[] = { " ", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто" },
-        stringnumshund[] = { " ", " сто", " двести", " триста", " четыресто", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот" };
+    string stringnums[] { " ", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять" },
+        stringnumsteens[] { " ", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" },
+        stringnumsdec[] { " ", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто" },
+        stringnumshund[] { " ", " сто", " двести", " триста", " четыресто", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот" };
 
     // Строка вывода
     string resultstring;
@@ -27,6 +27,24 @@ void numToTextConvert(char numbers[], bool trigger)
         // Символ число?
         if (isdigit(numbers[i]))
         {
+            if (trigger)
+            {
+                if (numbers[i] == '1')
+                {
+                    resultstring = " рубль";
+                }
+                else if (numbers[i] > '1' && numbers[i] < '5')
+                {
+                    resultstring = " рубля";
+                }
+                else
+                {
+                    resultstring = " рублей";
+                }
+
+                trigger = false;
+            }
+
             // Добавляем его в разбивной массив
             trichar[2 - count] = numbers[i];
             count++;
@@ -50,7 +68,7 @@ void numToTextConvert(char numbers[], bool trigger)
                             resultstring = " тысяча" + resultstring;
                         }
                         // Если первое число от 2 до 4
-                        else if (trichar[2] > '1' && trichar[2] < '5' && trichar[1] < '1')
+                        else if (trichar[2] > '1' && trichar[2] < '5' && trichar[1] != '1')
                         {
                             resultstring = " тысячи" + resultstring;
                         }
@@ -67,14 +85,14 @@ void numToTextConvert(char numbers[], bool trigger)
                     {
                         resultstring = " миллион" + resultstring;
                     }
-                    else if (trichar[2] > '1' && trichar[2] < '5' && trichar[1] < '1')
+                    else if (trichar[2] > '1' && trichar[2] < '5' && trichar[1] != '1')
                     {
                         resultstring = " миллиона" + resultstring;
                     }
                     else
                     {
                         resultstring = " миллионов" + resultstring;
-                    }
+                    } 
                     break;
                 default:
                     break;
@@ -159,14 +177,9 @@ void numToTextConvert(char numbers[], bool trigger)
     }
 
     // Выводим получившиюся строку
-    if (trigger)
-    {
-        cout << resultstring << " рублей";
-    }
-    else
-    {
-        cout << resultstring;
-    }
+    cout << resultstring;
+
+    fill_n(numbers, 12, NULL);
 }
 
 int main()
