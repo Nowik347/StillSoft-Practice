@@ -1,0 +1,82 @@
+
+                        //// Если первое число 1, а второе 0
+                        //if ((trichar[2] == '1' && trichar[1] == '\0') || (trichar[2] == '1' && trichar[1] != '1'))
+                        //{
+                        //    resultstring = " тысяча" + resultstring;
+                        //}
+                        //// Если первое число от 2 до 4
+                        //else if (trichar[2] > '1' && trichar[2] < '5' && trichar[1] != '1')
+                        //{
+                        //    resultstring = " тысячи" + resultstring;
+                        //}
+                        //else
+                        //{
+                        //    resultstring = " тысяч" + resultstring;
+                        //}
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________                        
+                    //// Тоже самое что и выше
+                    //if ((trichar[2] == '1' && trichar[1] == '\0') || (trichar[2] == '1' && trichar[1] != '1'))
+                    //{
+                    //    resultstring = " миллион" + resultstring;
+                    //}
+                    //else if (trichar[2] > '1' && trichar[2] < '5' && trichar[1] != '1')
+                    //{
+                    //    resultstring = " миллиона" + resultstring;
+                    //}
+                    //else
+                    //{
+                    //    resultstring = " миллионов" + resultstring;
+                    //} 
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________
+                // Проверка десятков
+                if (char2 != 0 && char2 > 0)
+                {
+                    // Проверка на числа от 11 до 19
+                    if (char2 == 1 && char3 > 0)
+                    {
+                        resultstring = stringnumsteens[char3] + resultstring;
+                    }
+                    else
+                    {
+                        // Снова правила русского языка
+                        if (trichar[2] == '1' && cycles == 1)
+                        {
+                            resultstring = " одна" + resultstring;
+                        }
+                        else if (trichar[2] == '2' && cycles == 1)
+                        {
+                            resultstring = " две" + resultstring;
+                        }
+                        else
+                        {
+                            resultstring = stringnums[char3] + resultstring;
+                        }
+
+                        resultstring = stringnumsdec[char2] + resultstring;
+                    }
+                }
+                // Если десятков нет, записываем только единицы
+                else
+                {
+                    // Снова правила русского языка
+                    if (trichar[2] == '1' && cycles == 1)
+                    {
+                        resultstring = " одна" + resultstring;
+                    }
+                    else if (trichar[2] == '2' && cycles == 1)
+                    {
+                        resultstring = " две" + resultstring;
+                    }
+                    else
+                    {
+                        resultstring = stringnums[char3] + resultstring;
+                    }
+                }
+
+                // Проверка на сотни
+                if (char1 != 0 && char1 > 0)
+                {
+                    resultstring = stringnumshund[char1] + resultstring;
+                }
