@@ -15,7 +15,7 @@ const char *g_mainstrings[4][10]                                     // Осно
     {" миллион", " миллиона", " миллионов"} 
 };
 //_______________________________________________________________________________________________________________________________________________________________________
-std::string thousandsExceptionCheck(int right_char, int rank_count)  // Функция проверки частного случая тысячи
+std::string thousandsExceptionCheck(unsigned char right_char, unsigned char rank_count)  // Функция проверки частного случая тысячи
 {
     switch (right_char)                                              // Проверка первого числа массива
     {
@@ -34,7 +34,7 @@ std::string thousandsExceptionCheck(int right_char, int rank_count)  // Функ
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________
-std::string getRank(int right_char, int middle_char, int rank_count) // Функция нахождения классов чисел
+std::string getRank(unsigned char right_char, unsigned char middle_char, unsigned char rank_count) // Функция нахождения классов чисел
 {
     switch (right_char)                                              // Проверка первого числа массива  // Упс...
     {                                                                                                   // Дальше всё switch...
@@ -55,67 +55,62 @@ std::string getRank(int right_char, int middle_char, int rank_count) // Функ
     }                                                                                                   //⠀⠀⠀⠀⠀⠀⠀⠀⠈⠓⠲⠤⠤⠤⠴⠚⠁⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 }                                                                                                       //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 //_______________________________________________________________________________________________________________________________________________________________________
-void writeToOutput(char current_rank_chars[], int rank_count, std::string& result_string)  // Основная функция конвертации
+void writeToOutput(unsigned char current_rank_chars[], unsigned char rank_count, std::string& result_string)    // Основная функция конвертации
 {
-    int left_char{ current_rank_chars[0] - '0' },                          // Временные переменные 
-        middle_char{ current_rank_chars[1] - '0' },                        // (символы хранятся как числа ASCII таблицы так что можно просто вычесть символ нуля(0) 
-        right_char{ current_rank_chars[2] - '0' };                         // и получить нужный int)
-
-    switch (rank_count)                                                    // Сколько циклов прошло?
+    switch (rank_count)                                                                         // Сколько циклов прошло?
     {
-    case 1:                                                                // Тысячи
-        if (left_char + middle_char + right_char != 0)                     // Добавляются только если они есть
+    case 1:                                                                                     // Тысячи
+        if (current_rank_chars[0] + current_rank_chars[1] + current_rank_chars[2] - '0' != 0)   // Добавляются только если они есть
         {
-            result_string = getRank(right_char, middle_char, rank_count) + result_string;
+            result_string = getRank(current_rank_chars[2] - '0', current_rank_chars[1] - '0', rank_count) + result_string;
         }
         break;
-    case 2:                                                                // Миллионы                              //⠟⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⢻⣿
-        result_string = getRank(right_char, middle_char, rank_count) + result_string;                               //⡆⠊⠈⣿⢿⡟⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣎⠈⠻
-        break;                                                                                                      //⣷⣠⠁⢀⠰⠀⣰⣿⣿⣿⣿⣿⣿⠟⠋⠛⠛⠿⠿⢿⣿⣿⣿⣧⠀⢹⣿⡑⠐⢰
-    default:                                                                                                        //⣿⣿⠀⠁⠀⠀⣿⣿⣿⣿⠟⡩⠐⠀⠀⠀⠀⢐⠠⠈⠊⣿⣿⣿⡇⠘⠁⢀⠆⢀
-        break;                                                                                                      //⣿⣿⣆⠀⠀⢤⣿⣿⡿⠃⠈⠀⣠⣶⣿⣿⣷⣦⡀⠀⠀⠈⢿⣿⣇⡆⠀⠀⣠⣾
-    }                                                                                                               //⣿⣿⣿⣧⣦⣿⣿⣿⡏⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠐⣿⣿⣷⣦⣷⣿⣿
-                                                                                                                    //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⣿⣿⣿⣿⣿⣿⣿
-    if (middle_char > 0)                                                   // Проверка десятков                     //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⣾⣿⣿⠋⠁⠀⠉⠻⣿⣿⣧⠀⠠⣿⣿⣿⣿⣿⣿⣿
-    {                                                                                                               //⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣿⡿⠁⠀⠀⠀⠀⠀⠘⢿⣿⠀⣺⣿⣿⣿⣿⣿⣿⣿
-        if (middle_char == 1)                                              // Проверка на числа от 11 до 19         //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣠⣂⠀⠀⠀⠀⠀⠀⠀⢀⣁⢠⣿⣿⣿⣿⣿⣿⣿⣿
-        {                                                                                                           //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣄⣤⣤⣔⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            switch (right_char)                                                                                     //     Нееет, только не if
+    case 2:                                                                                     // Миллионы                         //⠟⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⢻⣿
+        result_string = getRank(current_rank_chars[2] - '0', current_rank_chars[1] - '0', rank_count) + result_string;              //⡆⠊⠈⣿⢿⡟⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣎⠈⠻
+        break;                                                                                                                      //⣷⣠⠁⢀⠰⠀⣰⣿⣿⣿⣿⣿⣿⠟⠋⠛⠛⠿⠿⢿⣿⣿⣿⣧⠀⢹⣿⡑⠐⢰
+    default:                                                                                                                        //⣿⣿⠀⠁⠀⠀⣿⣿⣿⣿⠟⡩⠐⠀⠀⠀⠀⢐⠠⠈⠊⣿⣿⣿⡇⠘⠁⢀⠆⢀
+        break;                                                                                                                      //⣿⣿⣆⠀⠀⢤⣿⣿⡿⠃⠈⠀⣠⣶⣿⣿⣷⣦⡀⠀⠀⠈⢿⣿⣇⡆⠀⠀⣠⣾
+    }                                                                                                                               //⣿⣿⣿⣧⣦⣿⣿⣿⡏⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠐⣿⣿⣷⣦⣷⣿⣿
+                                                                                                                                    //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⣿⣿⣿⣿⣿⣿⣿
+    if (current_rank_chars[1] - '0' > 0)                                                        // Проверка десятков                //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⣾⣿⣿⠋⠁⠀⠉⠻⣿⣿⣧⠀⠠⣿⣿⣿⣿⣿⣿⣿
+    {                                                                                                                               //⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣿⡿⠁⠀⠀⠀⠀⠀⠘⢿⣿⠀⣺⣿⣿⣿⣿⣿⣿⣿
+        if (current_rank_chars[1] - '0' == 1)                                                   // Проверка на числа от 11 до 19    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣠⣂⠀⠀⠀⠀⠀⠀⠀⢀⣁⢠⣿⣿⣿⣿⣿⣿⣿⣿
+        {                                                                                                                           //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣄⣤⣤⣔⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+            switch (current_rank_chars[2] - '0')                                                                                    //     Нееет, только не if
             {
-            case 0:                                                        // Если нет единиц
-                result_string = g_mainstrings[2][middle_char] + result_string;
+            case 0:                                                                             // Если нет единиц
+                result_string = g_mainstrings[2][current_rank_chars[1] - '0'] + result_string;
                 break;
-            default:                                                       // Если они есть
-                result_string = g_mainstrings[1][right_char] + result_string;
+            default:                                                                            // Если они есть
+                result_string = g_mainstrings[1][current_rank_chars[2] - '0'] + result_string;
                 break;
             }
         }
         else
         {
-            result_string = thousandsExceptionCheck(right_char, rank_count) + result_string;
+            result_string = thousandsExceptionCheck(current_rank_chars[2] - '0', rank_count) + result_string;
 
-            result_string = g_mainstrings[2][middle_char] + result_string;
+            result_string = g_mainstrings[2][current_rank_chars[1] - '0'] + result_string;
         }
     }
-    else                                                                   // Если десятков нет, записываем только единицы
+    else                                                                                        // Если десятков нет, записываем только единицы
     {
-        result_string = thousandsExceptionCheck(right_char, rank_count) + result_string;
+        result_string = thousandsExceptionCheck(current_rank_chars[2] - '0', rank_count) + result_string;
     }
 
-    if (left_char > 0)                                                     // Проверка на сотни
+    if (current_rank_chars[0] - '0' > 0)                                                        // Проверка на сотни
     {
-        result_string = g_mainstrings[3][left_char] + result_string;
+        result_string = g_mainstrings[3][current_rank_chars[0] - '0'] + result_string;
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________
 void numToTextConvert(char input_numbers[], bool add_rubles)                    // Функция разбивки
 {
-    char current_rank_chars[3] { 0,0,0 };                                       // Разбивающий массив
-    int rank_digits_count{ 0 }, rank_count{ 0 };                                // Счётчики
+    unsigned char current_rank_chars[3] { 0,0,0 }, rank_digits_count{ 0 }, rank_count{ 0 }; // Счётчики и разбивающий массив
 
     std::string result_string;                                                  // Строка вывода
 
-    for (int i = sizeof(input_numbers) + 3; i >= 0; i--)                        // Читаем символы введённого массива
+    for (short i = sizeof(input_numbers) + 3; i >= 0; i--)                      // Читаем символы введённого массива
     {
         if (isdigit(input_numbers[i]))                                          // Символ число?
         {
