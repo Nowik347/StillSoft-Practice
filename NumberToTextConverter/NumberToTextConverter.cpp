@@ -60,7 +60,7 @@ void writeToOutput(unsigned char current_rank_chars[], unsigned char rank_count,
     switch (rank_count)                                                                         // Сколько циклов прошло?
     {
     case 1:                                                                                     // Тысячи
-        if (current_rank_chars[0] + current_rank_chars[1] + current_rank_chars[2] - '0' != 0)   // Добавляются только если они есть
+        if ((current_rank_chars[0] - '0') + (current_rank_chars[1] - '0') + (current_rank_chars[2] - '0') != 0)   // Добавляются только если они есть
         {
             result_string = getRank(current_rank_chars[2] - '0', current_rank_chars[1] - '0', rank_count) + result_string;
         }
@@ -116,21 +116,24 @@ void numToTextConvert(char input_numbers[], bool add_rubles)                    
         {
             if (add_rubles)                                                     // Добавляем рубли              //⠉⠉⠉⣿⡿⠿⠛⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⣻⣩⣉⠉⠉
             {                                                                                                   //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣀⣀⣀⣀⣀⣀⡀⠄⠄⠉⠉⠄⠄⠄
-                switch (input_numbers[i])                                                                       //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⠄⠄⠄⠄
-                {                                                                                               //⠄⠄⠄⠄⠄⠄⠄⠄⠄⢤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠄⠄⠄
-                case '1':                                                                                       //⡄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠄⠉⠉⠉⣋⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⢷⡀⠄⠄
-                    result_string = g_utilitystrings[0][0];                                                     //⣿⡄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⣾⣿⣷⣄⣀⣀⣀⣠⣄⣢⣤⣤⣾⣿⡀⠄
-                    break;                                                                                      //⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣹⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⢟⢁⣠
-                case '2':                                                                                       //⣿⣿⣄⣀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠉⣉⣉⣰⣿⣿⣿⣿⣷⣥⡀⠉⢁⡥⠈
-                case '3':                                                                                       //⣿⣿⣿⢹⣇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠒⠛⠛⠋⠉⠉⠛⢻⣿⣿⣷⢀⡭⣤⠄
-                case '4':                                                                                       //⣿⣿⣿⡼⣿⠷⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣀⣠⣿⣟⢷⢾⣊⠄⠄
-                    result_string = g_utilitystrings[0][1];                                                     //⠉⠉⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⣈⣉⣭⣽⡿⠟⢉⢴⣿⡇⣺⣿⣷
-                    break;                                                                                      //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠁⠐⢊⣡⣴⣾⣥⣿⣿⣿
-                default:                                                                                        //      Жёская нарезка кода
-                    result_string = g_utilitystrings[0][2];
-                    break;
-                }
-
+                if (input_numbers[i - 1] == '1')                                                                //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⠄⠄⠄⠄
+                    result_string = g_utilitystrings[0][2];                                                     //⠄⠄⠄⠄⠄⠄⠄⠄⠄⢤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠄⠄⠄
+                else                                                                                            //⡄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠄⠉⠉⠉⣋⠉⠉⠉⠉⠉⠉⠉⠉⠙⠛⢷⡀⠄⠄
+                    switch (input_numbers[i])                                                                   //⣿⡄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⣾⣿⣷⣄⣀⣀⣀⣠⣄⣢⣤⣤⣾⣿⡀⠄
+                    {                                                                                           //⣿⠃⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣹⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⢟⢁⣠
+                    case '1':                                                                                   //⣿⣿⣄⣀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠉⠉⣉⣉⣰⣿⣿⣿⣿⣷⣥⡀⠉⢁⡥⠈
+                        result_string = g_utilitystrings[0][0];                                                 //⣿⣿⣿⢹⣇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠒⠛⠛⠋⠉⠉⠛⢻⣿⣿⣷⢀⡭⣤⠄
+                        break;                                                                                  //⣿⣿⣿⡼⣿⠷⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣀⣠⣿⣟⢷⢾⣊⠄⠄
+                    case '2':                                                                                   //⠉⠉⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⣈⣉⣭⣽⡿⠟⢉⢴⣿⡇⣺⣿⣷
+                    case '3':                                                                                   //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠁⠐⢊⣡⣴⣾⣥⣿⣿⣿
+                    case '4':                                                                                   //      Жёская нарезка кода
+                        result_string = g_utilitystrings[0][1];
+                        break;
+                    default:
+                        result_string = g_utilitystrings[0][2];
+                        break;
+                    }
+                
                 add_rubles = false;
             }
 
@@ -147,6 +150,8 @@ void numToTextConvert(char input_numbers[], bool add_rubles)                    
             }
         }
     }
+
+    //return result_string;
 
     std::cout << result_string;                                                 // Выводим получившиюся строку
 
