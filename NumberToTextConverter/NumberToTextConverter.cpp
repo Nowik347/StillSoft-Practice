@@ -1,8 +1,11 @@
 ﻿#include <iostream>
 #include <conio.h>
-                                                                     // Глобальные словари
-const char *g_mainstrings[4][10]                                     // Основной словарь
-{
+
+#define getInt(arr, index) arr[index] - '0'                          // Находим целочисленное значение символа из массива символов
+#define getFullInt(arr) arr[0] - '0' + arr[1] - '0' + arr[2] - '0'   // Находим целочисленное значение всего массива символов
+
+const char *g_mainstrings[4][10]                                     // Глобальные словари
+{                                                                    // Основной словарь
     { "", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять" },
     { "", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" },
     { "", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто" },
@@ -15,7 +18,7 @@ const char *g_mainstrings[4][10]                                     // Осно
     {" миллион", " миллиона", " миллионов"} 
 };
 //_______________________________________________________________________________________________________________________________________________________________________
-std::string thousandsExceptionCheck(unsigned char right_char, unsigned char rank_count)  // Функция проверки частного случая тысячи
+std::string thousandsExceptionCheck(short right_char, short& rank_count)  // Функция проверки частного случая тысячи
 {
     switch (right_char)                                              // Проверка первого числа массива
     {
@@ -34,7 +37,7 @@ std::string thousandsExceptionCheck(unsigned char right_char, unsigned char rank
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________
-std::string getRank(unsigned char right_char, unsigned char middle_char, unsigned char rank_count) // Функция нахождения классов чисел
+std::string getRank(short right_char, short middle_char, short& rank_count) // Функция нахождения классов чисел
 {
     switch (right_char)                                              // Проверка первого числа массива  // Упс...
     {                                                                                                   // Дальше всё switch...
@@ -55,58 +58,59 @@ std::string getRank(unsigned char right_char, unsigned char middle_char, unsigne
     }                                                                                                   //⠀⠀⠀⠀⠀⠀⠀⠀⠈⠓⠲⠤⠤⠤⠴⠚⠁⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 }                                                                                                       //⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 //_______________________________________________________________________________________________________________________________________________________________________
-void writeToOutput(unsigned char current_rank_chars[], unsigned char rank_count, std::string& result_string)    // Основная функция конвертации
+void writeToOutput(char this_rank_chars[], short& rank_count, std::string& result_string)       // Основная функция конвертации
 {
     switch (rank_count)                                                                         // Сколько циклов прошло?
     {
     case 1:                                                                                     // Тысячи
-        if ((current_rank_chars[0] - '0') + (current_rank_chars[1] - '0') + (current_rank_chars[2] - '0') != 0)   // Добавляются только если они есть
+        if (getFullInt(this_rank_chars) != 0)                                                   // Добавляются только если они есть
         {
-            result_string = getRank(current_rank_chars[2] - '0', current_rank_chars[1] - '0', rank_count) + result_string;
+            result_string = getRank(getInt(this_rank_chars, 2), getInt(this_rank_chars, 1), rank_count) + result_string;
         }
         break;
     case 2:                                                                                     // Миллионы                         //⠟⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠛⢻⣿
-        result_string = getRank(current_rank_chars[2] - '0', current_rank_chars[1] - '0', rank_count) + result_string;              //⡆⠊⠈⣿⢿⡟⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣎⠈⠻
+        result_string = getRank(getInt(this_rank_chars, 2), getInt(this_rank_chars, 1), rank_count) + result_string;                //⡆⠊⠈⣿⢿⡟⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣎⠈⠻
         break;                                                                                                                      //⣷⣠⠁⢀⠰⠀⣰⣿⣿⣿⣿⣿⣿⠟⠋⠛⠛⠿⠿⢿⣿⣿⣿⣧⠀⢹⣿⡑⠐⢰
     default:                                                                                                                        //⣿⣿⠀⠁⠀⠀⣿⣿⣿⣿⠟⡩⠐⠀⠀⠀⠀⢐⠠⠈⠊⣿⣿⣿⡇⠘⠁⢀⠆⢀
         break;                                                                                                                      //⣿⣿⣆⠀⠀⢤⣿⣿⡿⠃⠈⠀⣠⣶⣿⣿⣷⣦⡀⠀⠀⠈⢿⣿⣇⡆⠀⠀⣠⣾
     }                                                                                                                               //⣿⣿⣿⣧⣦⣿⣿⣿⡏⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⡆⠀⠀⠐⣿⣿⣷⣦⣷⣿⣿
                                                                                                                                     //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⣿⣿⣿⣿⣿⣿⣿
-    if (current_rank_chars[1] - '0' > 0)                                                        // Проверка десятков                //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⣾⣿⣿⠋⠁⠀⠉⠻⣿⣿⣧⠀⠠⣿⣿⣿⣿⣿⣿⣿
+    if (getInt(this_rank_chars, 1) > 0)                                                         // Проверка десятков                //⣿⣿⣿⣿⣿⣿⣿⣿⡆⠀⣾⣿⣿⠋⠁⠀⠉⠻⣿⣿⣧⠀⠠⣿⣿⣿⣿⣿⣿⣿
     {                                                                                                                               //⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣿⡿⠁⠀⠀⠀⠀⠀⠘⢿⣿⠀⣺⣿⣿⣿⣿⣿⣿⣿
-        if (current_rank_chars[1] - '0' == 1)                                                   // Проверка на числа от 11 до 19    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣠⣂⠀⠀⠀⠀⠀⠀⠀⢀⣁⢠⣿⣿⣿⣿⣿⣿⣿⣿
+        if (getInt(this_rank_chars, 1) == 1)                                                    // Проверка на числа от 11 до 19    //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⣠⣂⠀⠀⠀⠀⠀⠀⠀⢀⣁⢠⣿⣿⣿⣿⣿⣿⣿⣿
         {                                                                                                                           //⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣄⣤⣤⣔⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-            switch (current_rank_chars[2] - '0')                                                                                    //     Нееет, только не if
+            switch (getInt(this_rank_chars, 2))                                                                                     //     Нееет, только не if
             {
             case 0:                                                                             // Если нет единиц
-                result_string = g_mainstrings[2][current_rank_chars[1] - '0'] + result_string;
+                result_string = g_mainstrings[2][getInt(this_rank_chars, 1)] + result_string;
                 break;
             default:                                                                            // Если они есть
-                result_string = g_mainstrings[1][current_rank_chars[2] - '0'] + result_string;
+                result_string = g_mainstrings[1][getInt(this_rank_chars, 2)] + result_string;
                 break;
             }
         }
         else
         {
-            result_string = thousandsExceptionCheck(current_rank_chars[2] - '0', rank_count) + result_string;
+            result_string = thousandsExceptionCheck(getInt(this_rank_chars, 2), rank_count) + result_string;
 
-            result_string = g_mainstrings[2][current_rank_chars[1] - '0'] + result_string;
+            result_string = g_mainstrings[2][getInt(this_rank_chars, 1)] + result_string;
         }
     }
     else                                                                                        // Если десятков нет, записываем только единицы
     {
-        result_string = thousandsExceptionCheck(current_rank_chars[2] - '0', rank_count) + result_string;
+        result_string = thousandsExceptionCheck(getInt(this_rank_chars, 2), rank_count) + result_string;
     }
 
-    if (current_rank_chars[0] - '0' > 0)                                                        // Проверка на сотни
+    if (getInt(this_rank_chars, 0) > 0)                                                        // Проверка на сотни
     {
-        result_string = g_mainstrings[3][current_rank_chars[0] - '0'] + result_string;
+        result_string = g_mainstrings[3][getInt(this_rank_chars, 0)] + result_string;
     }
 }
 //_______________________________________________________________________________________________________________________________________________________________________
 void numToTextConvert(char input_numbers[], bool add_rubles)                    // Функция разбивки
 {
-    unsigned char current_rank_chars[3] { 0,0,0 }, rank_digits_count{ 0 }, rank_count{ 0 }; // Счётчики и разбивающий массив
+    char current_rank_chars[3]{ 0,0,0 };
+    short rank_digits_count{ 0 }, rank_count{ 0 };                              // Счётчики и разбивающий массив
 
     std::string result_string;                                                  // Строка вывода
 
