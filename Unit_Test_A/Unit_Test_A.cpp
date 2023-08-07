@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../NumberToTextConverter/NumberToTextConverter.cpp"
+#include "../TestingField/Prototype_1.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -12,505 +12,90 @@ namespace UnitTestA
 		
 		bool add_rubles{ false };
 
-		TEST_METHOD(TestMethodA)
+		const char* answers[4][10]
 		{
-			std::string expected{ " один" };
-			char input_numbers[]{ "1" };
+			{" один", " десять", " сто", " одна тысяча", " десять тысяч", " сто тысяч", " один миллион", " десять миллионов", " сто миллионов",
+			" сто одиннадцать миллионов сто одиннадцать тысяч сто одиннадцать"},
 
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
+			{" один рубль", " десять рублей", " сто рублей", " одна тысяча рублей", " десять тысяч рублей", " сто тысяч рублей", " один миллион рублей", " десять миллионов рублей",
+			" сто миллионов рублей", " сто одиннадцать миллионов сто одиннадцать тысяч сто одиннадцать рублей"},
 
-			// Test
-			Assert::AreEqual(expected, result);
-		}
+			{" четыреста восемьдесят пять миллионов девятьсот девяносто три тысячи девятьсот семьдесят два", " семьсот тридцать шесть миллионов четыреста восемьдесят шесть тысяч сто девяносто три",
+			 " семьсот девяносто миллионов семьсот девять тысяч шесть", " триста тридцать три миллиона девятьсот семнадцать тысяч девятьсот шестьдесят пять",
+			 " пятьсот девяносто миллионов шестьсот пятьдесят две тысячи семьсот шестьдесят четыре", " сто двадцать шесть миллионов семьсот восемьдесят одна тысяча четыреста девяносто два",
+			 " семьсот сорок пять миллионов двести шестьдесят пять тысяч шестьсот шестнадцать", " двести шестнадцать миллионов сто шестьдесят тысяч пятьсот сорок три",
+			 " девятьсот девяносто девять миллионов триста семьдесят шесть тысяч шестьсот девяносто три", " девятьсот сорок восемь миллионов двести семьдесят три тысячи шестьсот двенадцать"},
 
-		TEST_METHOD(TestMethodB)
+			{" четыреста восемьдесят пять миллионов девятьсот девяносто три тысячи девятьсот семьдесят два рубля", " семьсот тридцать шесть миллионов четыреста восемьдесят шесть тысяч сто девяносто три рубля",
+			 " семьсот девяносто миллионов семьсот девять тысяч шесть рублей", " триста тридцать три миллиона девятьсот семнадцать тысяч девятьсот шестьдесят пять рублей",
+			 " пятьсот девяносто миллионов шестьсот пятьдесят две тысячи семьсот шестьдесят четыре рубля", " сто двадцать шесть миллионов семьсот восемьдесят одна тысяча четыреста девяносто два рубля",
+			 " семьсот сорок пять миллионов двести шестьдесят пять тысяч шестьсот шестнадцать рублей", " двести шестнадцать миллионов сто шестьдесят тысяч пятьсот сорок три рубля",
+			 " девятьсот девяносто девять миллионов триста семьдесят шесть тысяч шестьсот девяносто три рубля", " девятьсот сорок восемь миллионов двести семьдесят три тысячи шестьсот двенадцать рублей"}
+		};
+
+		char* inputs[4][10]
 		{
-			std::string expected{ " десять" };
-			char input_numbers[]{ "10" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodC)
-		{
-			std::string expected{ " сто" };
-			char input_numbers[]{ "100" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodD)
-		{
-			std::string expected{ " одна тысяча" };
-			char input_numbers[]{ "1 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodE)
-		{
-			std::string expected{ " десять тысяч" };
-			char input_numbers[]{ "10 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodF)
-		{
-			std::string expected{ " сто тысяч" };
-			char input_numbers[]{ "100 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodG)
-		{
-			std::string expected{ " один миллион" };
-			char input_numbers[]{ "1 000 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodH)
-		{
-			std::string expected{ " десять миллионов" };
-			char input_numbers[]{ "10 000 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodI)
-		{
-			std::string expected{ " сто миллионов" };
-			char input_numbers[]{ "100 000 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodJ)
-		{
-			std::string expected{ " сто одиннадцать миллионов сто одиннадцать тысяч сто одиннадцать" };
-			char input_numbers[]{ "111 111 111" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-	};
-
-	TEST_CLASS(UnitTestB)
-	{
-	public:
-
-		bool add_rubles{ true };
+			{"1", "10", "100", "1000", "10000", "100000", "1000000", "10000000", "100000000", "111111111"},
+			{"1", "10", "100", "1000", "10000", "100000", "1000000", "10000000", "100000000", "111111111"},
+			{"485993972", "736486193", "790709006", "333917965", "590652764", "126781492", "745265616", "216160543", "999376693", "948273612"},
+			{"485993972", "736486193", "790709006", "333917965", "590652764", "126781492", "745265616", "216160543", "999376693", "948273612"}
+		};
 
 		TEST_METHOD(TestMethodA)
 		{
-			std::string expected{ " один рубль" };
-			char input_numbers[]{ "1" };
-			
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
+			std::string expected{}, result{};
+			int* input_numbers{ 0 }; 
+			int length{ 0 }, count{ 0 }, final_count{ 40 }, module_count{ 0 };
+
+			for (short i{ 0 }; i < 4; i++)
+			{
+				switch (i)
+				{
+				case 0:
+					add_rubles = false;
+					break;
+				case 1:
+					add_rubles = true;
+					break;
+				case 2:
+					add_rubles = false;
+					break;
+				case 3:
+					add_rubles = true;
+					break;
+				}
+
+				module_count = 0;
+
+				for (short j{ 0 }; j < 10; j++)
+				{
+					expected = answers[i][j];
+
+					input_numbers = convertCharArrToIntArr(inputs[i][j], length);
+
+					result = numToTextConvert(input_numbers, add_rubles, length);
+
+					if (result == expected)
+					{
+						count++;
+						module_count++;
+
+						Logger::WriteMessage(" Test complete ");
+					}
+				}
+
+				if (module_count == 10)
+				{
+					Logger::WriteMessage(" Module operational \n");
+				}
+				else
+				{
+					Logger::WriteMessage(" Module failed \n");
+				}
+			}
 
 			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodB)
-		{
-			std::string expected{ " десять рублей" };
-			char input_numbers[]{ "10" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodC)
-		{
-			std::string expected{ " сто рублей" };
-			char input_numbers[]{ "100" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodD)
-		{
-			std::string expected{ " одна тысяча рублей" };
-			char input_numbers[]{ "1 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodE)
-		{
-			std::string expected{ " десять тысяч рублей" };
-			char input_numbers[]{ "10 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodF)
-		{
-			std::string expected{ " сто тысяч рублей" };
-			char input_numbers[]{ "100 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodG)
-		{
-			std::string expected{ " один миллион рублей" };
-			char input_numbers[]{ "1 000 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodH)
-		{
-			std::string expected{ " десять миллионов рублей" };
-			char input_numbers[]{ "10 000 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodI)
-		{
-			std::string expected{ " сто миллионов рублей" };
-			char input_numbers[]{ "100 000 000" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodJ)
-		{
-			std::string expected{ " сто одиннадцать миллионов сто одиннадцать тысяч сто одиннадцать рублей" };
-			char input_numbers[]{ "111 111 111" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-	};
-
-	TEST_CLASS(UnitTestC)
-	{
-	public:
-
-		bool add_rubles{ false };
-
-		TEST_METHOD(TestMethodA)
-		{
-			std::string expected{ " четыреста восемьдесят пять миллионов девятьсот девяносто три тысячи девятьсот семьдесят два" };
-			char input_numbers[]{ "485 993 972" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodB)
-		{
-			std::string expected{ " семьсот тридцать шесть миллионов четыреста восемьдесят шесть тысяч сто девяносто три" };
-			char input_numbers[]{ "736 486 193" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodC)
-		{
-			std::string expected{ " семьсот девяносто миллионов семьсот девять тысяч шесть" };
-			char input_numbers[]{ "790 709 006" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodD)
-		{
-			std::string expected{ " триста тридцать три миллиона девятьсот семнадцать тысяч девятьсот шестьдесят пять" };
-			char input_numbers[]{ "333 917 965" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodE)
-		{
-			std::string expected{ " пятьсот девяносто миллионов шестьсот пятьдесят две тысячи семьсот шестьдесят четыре" };
-			char input_numbers[]{ "590 652 764" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodF)
-		{
-			std::string expected{ " сто двадцать шесть миллионов семьсот восемьдесят одна тысяча четыреста девяносто два" };
-			char input_numbers[]{ "126 781 492" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodG)
-		{
-			std::string expected{ " семьсот сорок пять миллионов двести шестьдесят пять тысяч шестьсот шестнадцать" };
-			char input_numbers[]{ "745 265 616" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodH)
-		{
-			std::string expected{ " двести шестнадцать миллионов сто шестьдесят тысяч пятьсот сорок три" };
-			char input_numbers[]{ "216 160 543" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodI)
-		{
-			std::string expected{ " девятьсот девяносто девять миллионов триста семьдесят шесть тысяч шестьсот девяносто три" };
-			char input_numbers[]{ "999 376 693" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodJ)
-		{
-			std::string expected{ " девятьсот сорок восемь миллионов двести семьдесят три тысячи шестьсот двенадцать" };
-			char input_numbers[]{ "948 273 612" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-	};
-
-	TEST_CLASS(UnitTestD)
-	{
-	public:
-
-		bool add_rubles{ true };
-
-		TEST_METHOD(TestMethodA)
-		{
-			std::string expected{ " четыреста восемьдесят пять миллионов девятьсот девяносто три тысячи девятьсот семьдесят два рубля" };
-			char input_numbers[]{ "485 993 972" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodB)
-		{
-			std::string expected{ " семьсот тридцать шесть миллионов четыреста восемьдесят шесть тысяч сто девяносто три рубля" };
-			char input_numbers[]{ "736 486 193" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodC)
-		{
-			std::string expected{ " семьсот девяносто миллионов семьсот девять тысяч шесть рублей" };
-			char input_numbers[]{ "790 709 006" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodD)
-		{
-			std::string expected{ " триста тридцать три миллиона девятьсот семнадцать тысяч девятьсот шестьдесят пять рублей" };
-			char input_numbers[]{ "333 917 965" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodE)
-		{
-			std::string expected{ " пятьсот девяносто миллионов шестьсот пятьдесят две тысячи семьсот шестьдесят четыре рубля" };
-			char input_numbers[]{ "590 652 764" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodF)
-		{
-			std::string expected{ " сто двадцать шесть миллионов семьсот восемьдесят одна тысяча четыреста девяносто два рубля" };
-			char input_numbers[]{ "126 781 492" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodG)
-		{
-			std::string expected{ " семьсот сорок пять миллионов двести шестьдесят пять тысяч шестьсот шестнадцать рублей" };
-			char input_numbers[]{ "745 265 616" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodH)
-		{
-			std::string expected{ " двести шестнадцать миллионов сто шестьдесят тысяч пятьсот сорок три рубля" };
-			char input_numbers[]{ "216 160 543" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodI)
-		{
-			std::string expected{ " девятьсот девяносто девять миллионов триста семьдесят шесть тысяч шестьсот девяносто три рубля" };
-			char input_numbers[]{ "999 376 693" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
-		}
-
-		TEST_METHOD(TestMethodJ)
-		{
-			std::string expected{ " девятьсот сорок восемь миллионов двести семьдесят три тысячи шестьсот двенадцать рублей" };
-			char input_numbers[]{ "948 273 612" };
-
-			// Call main() in your test
-			std::string result = numToTextConvert(input_numbers, add_rubles);
-
-			// Test
-			Assert::AreEqual(expected, result);
+			Assert::AreEqual(final_count, count);
 		}
 	};
 }

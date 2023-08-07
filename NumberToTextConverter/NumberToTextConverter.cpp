@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <conio.h>
+#include <chrono>
 
 #define getInt(arr, index) arr[index] - '0'                          // Находим целочисленное значение символа из массива символов
 #define getFullInt(arr) arr[0] - '0' + arr[1] - '0' + arr[2] - '0'   // Находим целочисленное значение всего массива символов
@@ -109,6 +110,7 @@ void writeToOutput(char this_rank_chars[], short& rank_count, std::string& resul
 //_______________________________________________________________________________________________________________________________________________________________________
 void numToTextConvert(char input_numbers[], bool add_rubles)                    // Функция разбивки
 {
+    auto start = std::chrono::high_resolution_clock::now();
     char current_rank_chars[3]{ 0,0,0 };
     short rank_digits_count{ 0 }, rank_count{ 0 };                              // Счётчики и разбивающий массив
 
@@ -156,8 +158,10 @@ void numToTextConvert(char input_numbers[], bool add_rubles)                    
     }
 
     //return result_string;
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-    std::cout << result_string;                                                 // Выводим получившиюся строку
+    std::cout << result_string << ' ' << duration.count();                      // Выводим получившиюся строку
 
     std::fill_n(input_numbers, 12, NULL);                                       // Обнуляем ввод
 }
