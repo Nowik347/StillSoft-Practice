@@ -33,25 +33,16 @@ tryagain:
 
     int length{ 0 }, *input_numbers{ 0 };
 
-    while (true)
-    {
-        char starting_input[g_input_length];                  // Массив ввода
+    char starting_input[g_input_length];                      // Массив ввода
 
-        std::cout << "Введите конвертируемое число: \n";
-        std::cin.getline(starting_input, g_input_length);     // Чтение строки
-        std::cout << "Результат:\n";
+    std::cout << "Введите конвертируемое число: \n";
+    std::cin.getline(starting_input, g_input_length);         // Чтение строки
+    std::cout << "Результат:\n";
 
-        input_numbers = convertCharArrToIntArr(starting_input, length);
+    input_numbers = convertCharArrToIntArr(starting_input, length);
 
-        if (input_numbers)
-            std::cout << numToTextConvert(input_numbers, add_rubles, length);  // Вызов функции
-
-        std::cout << "\nДля повторного набора нажмите <r> , для выхода нажмите любую другую клавишу.";
-        if (_getch() != 'r')                                  // Выход из цикла
-            exit(0);
-
-        system("cls");                                        // Чистка экрана
-    }
+    if (input_numbers)
+        std::cout << numToTextConvert(input_numbers, add_rubles, length);  // Вызов функции
 }
 //_______________________________________________________________________________________________________________________________________________________________________
 std::string numToTextConvert(int* input_nums, bool add_rubles, int length)      // Функция разбивки
