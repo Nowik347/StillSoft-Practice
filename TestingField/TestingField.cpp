@@ -2,6 +2,8 @@
 //
 //const int g_input_length{ 10 };
 //
+//const char* g_testingarray[3][3]{ {"1","2","3" }, { "4","5","6" }, { "8","9","0" } };
+//
 //void reverseArray(int *array, int length)
 //{
 //    for (int i{ 0 }, j{ length - 1 }; i < j; i++, j--)
@@ -58,16 +60,27 @@
 //{
 //    setlocale(LC_ALL, "Rus");
 //
-//    char starting_input[g_input_length];
-//
-//    std::cin.getline(starting_input, g_input_length);
-//
-//    int length{ 0 }, *input_numbers{ convertCharArrToIntArr(starting_input, length) };
-//
-//    reverseArray(input_numbers, length);
-//
-//    for (int i{ 0 }; i < length; i++)
+//    for (int i{ 0 }; i < 1; i++)
 //    {
-//        std::cout << input_numbers[i] << ' ';
+//        std::cout << '\n';
+//
+//        for (int j{ 0 }; j < 10; j++)
+//        {
+//            std::cout << ((i & j) & 0) << ' ';
+//        }
+//
+//        std::cout << '\n';
+//    }
+//
+//    for (int i{ 0 }; i < 1; i++)
+//    {
+//        std::cout << '\n';
+//
+//        for (int j{ 0 }; j < 10; j++)
+//        {
+//            std::cout << ((j & i) & 0) << ' ';
+//        }
+//
+//        std::cout << '\n';
 //    }
 //}

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../TestingField/Prototype_1.cpp"
+#include "../TestingField/Prototype_2.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -81,6 +81,10 @@ namespace UnitTestA
 						module_count++;
 
 						Logger::WriteMessage(" Test complete ");
+					}
+					else
+					{
+						Logger::WriteMessage(" Test failed ");
 					}
 				}
 
