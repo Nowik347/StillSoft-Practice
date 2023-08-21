@@ -1,125 +1,120 @@
 #ifndef MY_UTILITY
 #define MY_UTILITY
 
-std::string reference[5][10]                                         // Глобальные словари
-{                                                                    // Основной словарь
+#define chkClass input_nums.size() / 6
+
+std::string reference[5][10]                                   // Глобальные словари
+{                                                              // Основной словарь
     { "", " сто", " двести", " триста", " четыреста", " пятьсот", " шестьсот", " семьсот", " восемьсот", " девятьсот" },
     { "", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять" },
     { "", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят", " семьдесят", " восемьдесят", " девяносто" }, 
     { " десять", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать" },
     { "", " одна", " две", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять" }
-}, util[2][10]                                                       // Вспомогательный словарь
+}, util[2][10]                                                 // Вспомогательный словарь
 {
     {" тысяч", " тысяча", " тысячи", " тысячи", " тысячи", " тысяч", " тысяч", " тысяч", " тысяч", " тысяч"},
     {" миллионов", " миллион", " миллиона", " миллиона", " миллиона", " миллионов", " миллионов", " миллионов", " миллионов", " миллионов"}
 };
 //_______________________________________________________________________________________________________________________________________________________________________
-class numConverter
+class numConverter                                             // Класс переводчика чисел
 {
-private:
-    std::string result_string;                                 // Строка вывода
-    std::string numbers[3][10], class_names[10];               // Словарь текущего разряда
-
-    std::vector<int> input_nums{};
-
-    short rank_sum{ 0 };
-
-    void loadTeens()
-    {
-        std::copy(reference[3], reference[3] + 10, numbers[1]);
-        std::fill_n(numbers[2], 10, "");
-
-        loadClassEx();
-    }
-
-    void loadTens()
-    {
-        std::copy(reference[1], reference[1] + 10, numbers[1]);
-        std::copy(reference[2], reference[2] + 10, numbers[2]);
-
-        loadClass();
-    }
-
-    void loadClass()
-    {
-        if (rank_sum == 0 || input_nums.size() <= 3)
-        {
-            std::fill_n(class_names, 10, "");
-        }
-        else if (input_nums.size() <= 6)
-        {
-            std::copy(util[0], util[0] + 10, class_names);
-            std::copy(reference[4], reference[4] + 10, numbers[1]);
-        }
-        else
-        {
-            std::copy(util[1], util[1] + 10, class_names);
-        }
-    }
-
-    void loadClassEx()
-    {
-        if (rank_sum == 0 || input_nums.size() <= 3)
-        {
-            std::fill_n(class_names, 10, "");
-        }
-        else if (input_nums.size() <= 6)
-        {
-            std::fill_n(class_names, 10, util[0][0]);
-        }
-        else
-        {
-            std::fill_n(class_names, 10, util[1][0]);
-        }
-    }
-
 public:
 
-    numConverter(std::vector<int> input)
+    numConverter(std::stack<int> input)                        // Конструктор
     {
-        for (short i{ 0 }; i < 3; i++)
+        for (short i{ 0 }; i < 3; i++)                              // Загружаем эталоны рангов чисел
             std::copy(reference[i], reference[i] + 10, numbers[i]);
 
-        input_nums = input;
+        input_nums = input;                                         // Копируем стек
 
-        rank_sum += input_nums[0];
+        rank_sum += input_nums.top();                               // Заранее добавляем первое число в сумму класса
 
-        loadClass();
+        loadClass();                                                // Загружаем стартовый класс
     }
 
-    std::string convertNum()
+    std::string convertNum()                                   // Основная функция конвертации
     {
-        while (!input_nums.empty())
-        {
-            rank_sum += input_nums[0];
+        rank_sum += input_nums.top();                               // Добавляем первое число в сумму класса
 
-            if (input_nums.size() % 3 == 2)
-                input_nums[0] == 1 ? loadTeens() : loadTens();
+        if (input_nums.size() % 3 == 2)                             // Если текущий ранг десятки
+            input_nums.top() == 1 ? loadTeens() : loadTens();           // На основе текущего числа подставляем ранг десятков
 
-            result_string += numbers[input_nums.size() % 3][input_nums[0]];
+        std::string result_string{ getString() + getClass() };      // Создаем строку и записываем в неё текущее число и класс
 
-            if (input_nums.size() % 3 == 1)
-            {
-                rank_sum = 0;
-                result_string += class_names[input_nums[0]];
-            }
+        input_nums.pop();                                           // Переходим к следующему числу
 
-            input_nums.erase(input_nums.begin());
-        }
+        return result_string;                                       // Возвращаем новую строку
+    }
 
-        return result_string;
+    bool isFinished()                                          // Интерфейс для проверки наличия оставщихся чисел
+    {
+        return input_nums.empty();                                  // Возвращает пуст стек или нет
+    }
+
+private:
+    std::string numbers[3][10], class_names[10];               // Словари класса
+
+    std::stack<int> input_nums{};                              // Стек класса
+
+    short rank_sum{ 0 };                                       // Сумма текущего разряда
+
+    std::string getString()                                    // Функция возвращающая строку для текущего числа 
+    {
+        return  numbers[input_nums.size() % 3][input_nums.top()];
+    }
+
+    std::string getClass()                                     // Функция возвращающая строку для текущего класса 
+    {
+        if (input_nums.size() % 3 == 1)                             // Если текущий ранг единицы
+            rank_sum = 0;                                               // Удаляем текущкю сумму ранга
+
+        return input_nums.size() % 3 == 1 ? class_names[input_nums.top()] : "";  // Возвращаем строку класса если текущий ранг единицы
+    }
+
+    void loadTeens()                                           // Функция подстановки чисел от 10 до 19
+    {
+        std::copy(reference[3], reference[3] + 10, numbers[1]);     // Копируем эталон-исключение единиц
+        std::fill_n(numbers[2], 10, "");                            // Удаляем десятки
+
+        loadClassEx();                                              // Делаем исключительную проверку класса
+    }
+
+    void loadTens()                                            // Функция подстановки чисел от 10 до 90
+    {
+        std::copy(reference[1], reference[1] + 10, numbers[1]);     // Копируем эталон единиц
+        std::copy(reference[2], reference[2] + 10, numbers[2]);     // Копируем эталон десятков
+
+        loadClass();                                                // Делаем проверку класса
+    }
+
+    void loadClass()                                           // Функция проверки класса
+    {
+        std::copy(util[chkClass], util[chkClass] + 10, class_names);// Копируем эталон класса
+
+        if (rank_sum == 0 || input_nums.size() <= 3)                // Единицы или пустой класс
+            std::fill_n(class_names, 10, "");                           // Очищаем массив классов
+        else if (input_nums.size() <= 6)                            // Тысячи
+            std::copy(reference[4], reference[4] + 10, numbers[1]);     // Копируем эталон-исключение единиц
+    }
+
+    void loadClassEx()                                         // Исключительная функция проверки класса
+    {
+        std::fill_n(class_names, 10, util[chkClass][0]);            // Заполняем массив множественной формой класса
+
+        if (rank_sum == 0 || input_nums.size() <= 3)                // Единицы или пустой класс
+            std::fill_n(class_names, 10, "");                           // Очищаем массив классов
     }
 };
 //_______________________________________________________________________________________________________________________________________________________________________
-std::vector<int> convertIntToVector(int input)
+std::stack<int> convertIntToStack(int input)
 {
     assert(input > 0);
 
-    std::vector<int> temp;
+    std::stack<int> temp;
 
     while (input > 0)
     {
-        temp.insert(temp.begin(), input % 10);
+        temp.push(input % 10);
         input /= 10;
     }
 

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../Prototype_4/Prototype_4.cpp"
-#include <vector>
+#include <stack>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -42,11 +42,9 @@ namespace UnitTestA
 				{
 					expected = answers[i][j];
 
-					std::vector<int> input_numbers = convertIntToVector(inputs[i][j]);
+					std::stack<int> input_numbers = convertIntToStack(inputs[i][j]);
 
-					numConverter converter{ input_numbers };
-
-					result = converter.convertNum();
+					result = convert(input_numbers);
 
 					if (result == expected)
 					{

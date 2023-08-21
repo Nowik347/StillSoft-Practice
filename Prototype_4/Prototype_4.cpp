@@ -1,8 +1,19 @@
 ﻿#include <iostream>
-#include <vector>
+#include <stack>
 #include <cassert>
 #include "utility.h"
 
+std::string convert(std::stack<int> input_numbers)
+{
+    std::string result{};
+
+    numConverter converter(input_numbers);
+
+    while (!converter.isFinished())
+        result += converter.convertNum();                  // Вызов функции
+
+    return result;
+}
 //_______________________________________________________________________________________________________________________________________________________________________
 int main()
 {
@@ -16,11 +27,7 @@ int main()
 
     assert(std::cin.fail() == false);                         // На случай некоректного ввода
 
-    std::vector<int> input_numbers = convertIntToVector(starting_input);
+    std::stack<int> input_numbers{ convertIntToStack(starting_input) };
 
-    if (!input_numbers.empty())
-    {
-        numConverter converter(input_numbers);
-        std::cout << converter.convertNum();                  // Вызов функции
-    }
+    std::cout << convert(input_numbers);
 }
