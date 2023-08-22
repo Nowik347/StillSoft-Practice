@@ -1,7 +1,7 @@
 #ifndef MY_UTILITY
 #define MY_UTILITY
 
-#define chkClass input_nums.size() / 6
+#define CHK_CLASS input_nums.size() / 6
 
 std::string reference[5][10]                                   // Глобальные словари
 {                                                              // Основной словарь
@@ -66,7 +66,7 @@ private:
     std::string getClass()                                     // Функция возвращающая строку для текущего класса 
     {
         if (input_nums.size() % 3 == 1)                             // Если текущий ранг единицы
-            rank_sum = 0;                                               // Удаляем текущкю сумму ранга
+            rank_sum = 0;                                               // Удаляем текущую сумму ранга
 
         return input_nums.size() % 3 == 1 ? class_names[input_nums.top()] : "";  // Возвращаем строку класса если текущий ранг единицы
     }
@@ -89,7 +89,7 @@ private:
 
     void loadClass()                                           // Функция проверки класса
     {
-        std::copy(util[chkClass], util[chkClass] + 10, class_names);// Копируем эталон класса
+        std::copy(util[CHK_CLASS], util[CHK_CLASS] + 10, class_names);// Копируем эталон класса
 
         if (rank_sum == 0 || input_nums.size() <= 3)                // Единицы или пустой класс
             std::fill_n(class_names, 10, "");                           // Очищаем массив классов
@@ -99,7 +99,7 @@ private:
 
     void loadClassEx()                                         // Исключительная функция проверки класса
     {
-        std::fill_n(class_names, 10, util[chkClass][0]);            // Заполняем массив множественной формой класса
+        std::fill_n(class_names, 10, util[CHK_CLASS][0]);            // Заполняем массив множественной формой класса
 
         if (rank_sum == 0 || input_nums.size() <= 3)                // Единицы или пустой класс
             std::fill_n(class_names, 10, "");                           // Очищаем массив классов
